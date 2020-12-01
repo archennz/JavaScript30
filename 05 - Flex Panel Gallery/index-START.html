@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+  <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Flex Panels 💪</title>
@@ -25,7 +25,8 @@
 
     .panels {
       min-height: 100vh;
-      overflow: hidden;
+        overflow: hidden;
+        display: flex;
     }
 
     .panel {
@@ -42,7 +43,12 @@
         background 0.2s;
       font-size: 20px;
       background-size: cover;
-      background-position: center;
+        background-position: center;
+        flex:1;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
     }
 
     .panel1 { background-image:url(https://source.unsplash.com/gYl-UtwNg_I/1500x1500); }
@@ -51,27 +57,46 @@
     .panel4 { background-image:url(https://source.unsplash.com/ITjiVXcwVng/1500x1500); }
     .panel5 { background-image:url(https://source.unsplash.com/3MNzGlQM7qs/1500x1500); }
 
-    /* Flex Children */
-    .panel > * {
-      margin: 0;
-      width: 100%;
-      transition: transform 0.5s;
-    }
+   /* Flex Children */
+   .panel > * {
+       margin: 0;
+       width: 100%;
+       transition: transform 0.5s;
+       flex: 1 0 auto;
+       display: flex;
+       justify-content: center;
+       align-items: center;
+       
+   }
+   .panel p:first-child {
+       transform: translateY(-100%);
+   }
 
-    .panel p {
-      text-transform: uppercase;
-      font-family: 'Amatic SC', cursive;
-      text-shadow: 0 0 4px rgba(0, 0, 0, 0.72), 0 0 14px rgba(0, 0, 0, 0.45);
-      font-size: 2em;
-    }
-    
-    .panel p:nth-child(2) {
-      font-size: 4em;
-    }
+   .panel.open-active p:first-child {
+       transform: translateY(0%);
+   }
+   .panel p:last-child {
+       transform: translateY(100%);
+   }
 
-    .panel.open {
-      font-size: 40px;
-    }
+   .panel.open-active p:last-child {
+       transform: translateY(0%);
+   }    
+       .panel p {
+           text-transform: uppercase;
+           font-family: 'Amatic SC', cursive;
+           text-shadow: 0 0 4px rgba(0, 0, 0, 0.72), 0 0 14px rgba(0, 0, 0, 0.45);
+           font-size: 2em;
+       }
+       
+       .panel p:nth-child(2) {
+           font-size: 4em;
+       }
+
+       .panel.open {
+           font-size: 40px;
+           flex: 5;
+       }
 
   </style>
 
@@ -105,7 +130,19 @@
   </div>
 
   <script>
+   const panels = document.querySelectorAll('.panel');
 
+   function toggleOpen() {
+       this.classList.toggle('open');
+   }
+
+   function toggleActive(e) {
+       if(e.propertyName.includes('flex')) {
+           this.classList.toggle('open-active');
+       }
+   }
+   panels.forEach(panel => panel.addEventListener('click', toggleOpen));
+   panels.forEach(panel => panel.addEventListener('transitionend', toggleActive));
   </script>
 
 

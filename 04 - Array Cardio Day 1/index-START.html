@@ -34,32 +34,64 @@
       'Berne, Eric', 'Berra, Yogi', 'Berry, Wendell', 'Bevan, Aneurin', 'Ben-Gurion, David', 'Bevel, Ken', 'Biden, Joseph', 'Bennington, Chester', 'Bierce, Ambrose',
       'Billings, Josh', 'Birrell, Augustine', 'Blair, Tony', 'Beecher, Henry', 'Biondo, Frank'
     ];
-    
-    // Array.prototype.filter()
-    // 1. Filter the list of inventors for those who were born in the 1500's
-
+   
+   // Array.prototype.filter()
+   // 1. Filter the list of inventors for those who were born in the 1500's
+   var output1 = inventors.filter(person => ((person.year > 1500)&&(person.year < 1600)));
+   console.table(output1);
+   
     // Array.prototype.map()
     // 2. Give us an array of the inventors first and last names
-
+   var output2 = inventors.map(person => person.first +' '+ person.last);
+   console.log(output2);
+   
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
+   var output3 = inventors.sort((p1, p2) => p1.year - p2.year);
+   console.log(output3);
 
-    // Array.prototype.reduce()
-    // 4. How many years did all the inventors live all together?
+   // Array.prototype.reduce()
+   // 4. How many years did all the inventors live all together?
+   const reducer = (accum, current) => accum + (current.passed - current.year);
+   var output4 = inventors.reduce(reducer, 0);
+   console.log(output4);
+   
 
-    // 5. Sort the inventors by years lived
+   // 5. Sort the inventors by years lived
+   function age(person) {
+       return person.passed - person.year;
+   }
+   var output5 = inventors.sort((p1,p2) => (age(p1) - age(p2)))
+   console.log(output5);
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
 
+    // completed in console 
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
+   const output6 = inventors.sort((p1, p2) => p1.last.localeCompare(p2.last));
+   console.log(output6);
 
-    // 8. Reduce Exercise
-    // Sum up the instances of each of these
-    const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
-
+   function comparePeople(one, two) {
+       [oneLastName, oneFirstName] = one.split(', ');
+       [twoLastName, twoFirstName] = two.split(', ');
+       return oneLastName.localeCompare(twoLastName)
+   }
+   const output7 = people.sort(comparePeople);
+   console.log(output7)
+   
+   // 8. Reduce Exercise
+   // Sum up the instances of each of these
+   const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+   function countItems(listItems, nextItem) {
+       const count = listItems[nextItem] || 0;
+       listItems[nextItem] = count + 1;
+       return listItems
+   }
+   const output8 = data.reduce(countItems, Object());
+   console.log(output8);
   </script>
 </body>
 </html>

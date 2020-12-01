@@ -41,7 +41,7 @@
       <kbd>K</kbd>
       <span class="sound">tom</span>
     </div>
-    <div data-key="76" class="key">
+    <div data-kkey="76" class="key">
       <kbd>L</kbd>
       <span class="sound">tink</span>
     </div>
@@ -68,6 +68,7 @@
        audio.play();
        key.classList.toggle('playing');
    }
+   
    function removeTransition(e) {
        if (e.propertyName !== 'transform') return;
        this.classList.remove('playing')

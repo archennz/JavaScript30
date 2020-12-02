@@ -132,8 +132,15 @@
   <script>
    const panels = document.querySelectorAll('.panel');
 
-   function toggleOpen() {
-       this.classList.toggle('open');
+   function toggleOpen(e) {
+       e.path[1].classList.toggle('open');
+       console.log(e.path[1]);
+       for (panel of panels) {
+           if (!panel.isEqualNode(e.path[1])) {
+               panel.classList.remove('open')
+           }
+       }
+       /* this.classList.toggle('open'); */
    }
 
    function toggleActive(e) {

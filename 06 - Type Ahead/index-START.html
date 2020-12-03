@@ -55,14 +55,16 @@
      const modifiedPopulation = modifyPopulation(place.population);
      return makeHTML(modifiedCityName, modifiedStateName, modifiedPopulation)
    }
-   
+
+   /* the real stuff  */
    const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
    const cities = fetchData(endpoint);
    
    function displayMatches() {
      const searchInput = this.value;
      const listCities = findMatches(cities, searchInput);
-     const html = listCities.map(place => makeHTMLFromPlace(place, searchInput))
+     const listCitiesByPop = listCities.sort((placeA, placeB) => (placeB.population-placeA.population));
+     const html = listCitiesByPop.map(place => makeHTMLFromPlace(place, searchInput))
                             .join('')
      suggestions.innerHTML = html;
    }

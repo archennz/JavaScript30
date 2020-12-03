@@ -30,12 +30,13 @@
 
    function displayMatches() {
      const listCities = findMatches(cities, this.value);
-     const 
      const html = listCities.map(place => {
+       const regex = new RegExp(this.value, 'gi');
+       const modifiedCityName = place.city.replace(regex, '<span class ="hl">$&</span>');
+       const modifiedStateName = place.state.replace(regex, '<span class ="hl">$&</span>');
        return `
        <li>
-<span class="name">${place.city}, ${place.state}</span>
-<span class="population">${place.population}</span>
+        <span class="name">${modifiedCityName}, ${modifiedStateName}</span>
        </li>`
      }).join('')
      suggestions.innerHTML = html;

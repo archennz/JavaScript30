@@ -15,11 +15,14 @@
     </ul>
   </form>
   <script>
-   const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
-   const cities = [];
-   text = fetch(endpoint)
-     .then(response => response.json())
-     .then(data => cities.push(...data))
+   /* some helper functions */
+   function fetchData(url) {
+     const output = [];
+     let text = fetch(url)
+       .then(response => response.json())
+       .then(data => output.push(...data));
+     return output
+   }
 
    function findMatches(cityList,searchInput) {
      return cityList.filter(place =>  {
@@ -28,28 +31,45 @@
      })
    }
 
-   function displayMatches() {
-     const listCities = findMatches(cities, this.value);
-     const html = listCities.map(place => {
-       const regex = new RegExp(this.value, 'gi');
-       const modifiedCityName = place.city.replace(regex, '<span class ="hl">$&</span>');
-       const modifiedStateName = place.state.replace(regex, '<span class ="hl">$&</span>');
-       const modifiedPopulation = place.population.replace(/(\d)(?=(\d\d\d)+$)/, "$1,");
-       return `
+   function modifyString(string, searchInput) {
+     const regex = new RegExp(searchInput, 'gi');
+     const modifiedString = string.replace(regex, '<span class ="hl">$&</span>');
+     return modifiedString;
+   }
+
+   function modifyPopulation(population) {
+     return population.replace(/(\d)(?=(\d\d\d)+$)/, "$1,");
+   }
+
+   function makeHTML(modifiedName, modifiedState, modifiedPopulation) {
+     return `
        <li>
-        <span class="name">${modifiedCityName}, ${modifiedStateName}</span>
+        <span class="name">${modifiedName}, ${modifiedName}</span>
         <span class="population">${modifiedPopulation}</span>
        </li>`
-     }).join('')
+   }     
+
+   function makeHTMLFromPlace(place, searchInput) {
+     const modifiedCityName = modifyString(place.city, searchInput);
+     const modifiedStateName = modifyString(place.state, searchInput);
+     const modifiedPopulation = modifyPopulation(place.population);
+     return makeHTML(modifiedCityName, modifiedStateName, modifiedPopulation)
+   }
+   
+   const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+   const cities = fetchData(endpoint);
+   
+   function displayMatches() {
+     const searchInput = this.value;
+     const listCities = findMatches(cities, searchInput);
+     const html = listCities.map(place => makeHTMLFromPlace(place, searchInput))
+                            .join('')
      suggestions.innerHTML = html;
    }
 
    const searchInput = document.querySelector('.search');
    const suggestions = document.querySelector('.suggestions');
 
-   
-
-   /* searchInput.addEventListener('change', e => console.log(e.target.value)); */
    searchInput.addEventListener('keyup', displayMatches);
 
   </script>

@@ -34,9 +34,11 @@
        const regex = new RegExp(this.value, 'gi');
        const modifiedCityName = place.city.replace(regex, '<span class ="hl">$&</span>');
        const modifiedStateName = place.state.replace(regex, '<span class ="hl">$&</span>');
+       const modifiedPopulation = place.population.replace(/(\d)(?=(\d\d\d)+$)/, "$1,");
        return `
        <li>
         <span class="name">${modifiedCityName}, ${modifiedStateName}</span>
+        <span class="population">${modifiedPopulation}</span>
        </li>`
      }).join('')
      suggestions.innerHTML = html;
@@ -44,6 +46,8 @@
 
    const searchInput = document.querySelector('.search');
    const suggestions = document.querySelector('.suggestions');
+
+   
 
    /* searchInput.addEventListener('change', e => console.log(e.target.value)); */
    searchInput.addEventListener('keyup', displayMatches);

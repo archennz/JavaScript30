@@ -8,12 +8,16 @@
 <body>
 
   <form class="search-form">
-    <input type="text" class="search" placeholder="City or State">
+      <input type="text" class="search" placeholder="City or State">
+      <input type="checkbox" id ="sorted" name ="sorted">
+      <label for="sorted">Sort by population descreasing</label>
     <ul class="suggestions">
       <li>Filter for a city</li>
       <li>or a state</li>
     </ul>
   </form>
+
+  
   <script>
    /* some helper functions */
    function fetchData(url) {
@@ -59,20 +63,31 @@
    /* the real stuff  */
    const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
    const cities = fetchData(endpoint);
-   
-   function displayMatches() {
-     const searchInput = this.value;
-     const listCities = findMatches(cities, searchInput);
-     const listCitiesByPop = listCities.sort((placeA, placeB) => (placeB.population-placeA.population));
-     const html = listCitiesByPop.map(place => makeHTMLFromPlace(place, searchInput))
-                            .join('')
-     suggestions.innerHTML = html;
-   }
 
    const searchInput = document.querySelector('.search');
    const suggestions = document.querySelector('.suggestions');
+   const sorted = document.querySelector('#sorted')
 
+   function displayMatches() {
+     console.log(sorted.checked);
+     const searchString = searchInput.value;
+     const listCities = findMatches(cities, searchString);
+     let html;
+     if (sorted.checked) {
+       const listCitiesByPop = listCities.sort((placeA, placeB) => (-placeB.population+placeA.population));
+       html = listCitiesByPop.map(place => makeHTMLFromPlace(place, searchString))
+                             .join('')
+       console.log("yes")
+     } else {
+       html = listCities.map(place => makeHTMLFromPlace(place, searchString))
+                        .join('')
+       console.log('no')
+     }
+     suggestions.innerHTML = html;
+     
+   }
    searchInput.addEventListener('keyup', displayMatches);
+   sorted.addEventListener('change', displayMatches);
 
   </script>
 </body>

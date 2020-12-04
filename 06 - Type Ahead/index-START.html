@@ -7,10 +7,14 @@
 </head>
 <body>
 
-  <form class="search-form">
+    <form class="search-form">
+      <div>
       <input type="text" class="search" placeholder="City or State">
+      </div>
+      <div>
+      <label for="sorted">Sort by population decreasing</label>
       <input type="checkbox" id ="sorted" name ="sorted">
-      <label for="sorted">Sort by population descreasing</label>
+      </div>
     <ul class="suggestions">
       <li>Filter for a city</li>
       <li>or a state</li>
@@ -78,7 +82,7 @@
                              .join('')
      } else {
        html = listCities.map(place => makeHTMLFromPlace(place, searchString))
-                        .join('')
+                        .join(' ')
      }
      suggestions.innerHTML = html;
      

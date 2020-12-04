@@ -20,6 +20,10 @@ input {
   margin: 50px auto;
 }
 
+input[type="checkbox"] {
+    width: 30%;
+}
+
 input.search {
   margin: 0;
   text-align: center;
@@ -33,6 +37,10 @@ input.search {
   border-radius: 5px;
   font-size: 40px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.12), inset 0 0 2px rgba(0, 0, 0, 0.19);
+}
+
+.box-line {
+    padding: 10px;
 }
 
 .suggestions {

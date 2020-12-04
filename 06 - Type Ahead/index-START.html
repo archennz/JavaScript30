@@ -69,7 +69,6 @@
    const sorted = document.querySelector('#sorted')
 
    function displayMatches() {
-     console.log(sorted.checked);
      const searchString = searchInput.value;
      const listCities = findMatches(cities, searchString);
      let html;
@@ -77,11 +76,9 @@
        const listCitiesByPop = listCities.sort((placeA, placeB) => (-placeB.population+placeA.population));
        html = listCitiesByPop.map(place => makeHTMLFromPlace(place, searchString))
                              .join('')
-       console.log("yes")
      } else {
        html = listCities.map(place => makeHTMLFromPlace(place, searchString))
                         .join('')
-       console.log('no')
      }
      suggestions.innerHTML = html;
      

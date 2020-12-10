@@ -94,8 +94,42 @@
       <p>Don't forget to tweet your result!</p>
     </div>
   </div>
-
-<script>
-</script>
+  
+  <script>
+    const checkBoxesList = Array.from(document.querySelectorAll('.item input[type="checkbox"]'));
+    // const items = Array.from(document.querySelectorAll('.item'));
+    let shiftPressed = false;
+    let lastCheckedIndex;
+  
+    function handleCheck(e) {
+      if (shiftPressed) {
+        const clickIndex = checkBoxesList.findIndex(checkbox => checkbox == e.path[0]);
+        const ticked = checkBoxesList.map(checkBox => checkBox.checked);
+        const [min_index, max_index] = [Math.min(clickIndex, lastCheckedIndex), Math.max(clickIndex, lastCheckedIndex];
+        for (let index = 0; index < ticked.length; index++) {
+          if (index <= max_index && index >= min_index) {
+            checkBoxesList[index].checked = true;
+          }
+        }
+      }
+      lastCheckedIndex = checkBoxesList.findIndex(checkbox => checkbox == e.path[0]);
+    }
+    
+    function startShiftPress(e) {
+      if (e.keyCode ==16) {
+        shiftPressed = true;
+      }
+    }
+    
+    function finishShiftPress(e) {
+      if (e.keyCode ==16) {
+        shiftPressed = false;
+      }
+    }
+  
+    checkBoxesList.forEach(checkbox => checkbox.addEventListener('click', handleCheck));
+    window.addEventListener('keydown', startShiftPress);
+    window.addEventListener('keyup', finishShiftPress);
+  </script>
 </body>
 </html>

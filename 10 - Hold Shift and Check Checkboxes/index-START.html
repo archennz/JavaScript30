@@ -6,12 +6,12 @@
 </head>
 <body>
   <style>
-
+    
     html {
       font-family: sans-serif;
       background: #ffc600;
     }
-
+    
     .inbox {
       max-width: 400px;
       margin: 50px auto;
@@ -19,26 +19,26 @@
       border-radius: 5px;
       box-shadow: 10px 10px 0 rgba(0,0,0,0.1);
     }
-
+    
     .item {
       display: flex;
       align-items: center;
       border-bottom: 1px solid #F1F1F1;
     }
-
+    
     .item:last-child {
       border-bottom: 0;
     }
-
+    
     input:checked + p {
       background: #F9F9F9;
       text-decoration: line-through;
     }
-
+    
     input[type="checkbox"] {
       margin: 20px;
     }
-
+    
     p {
       margin: 0;
       padding: 20px;
@@ -50,11 +50,11 @@
       border-left: 1px solid #D1E2FF;
     }
   </style>
-   <!--
-   The following is a common layout you would see in an email client.
-
-   When a user clicks a checkbox, holds Shift, and then clicks another checkbox a few rows down, all the checkboxes inbetween those two checkboxes should be checked.
-
+  <!--
+    The following is a common layout you would see in an email client.
+    
+    When a user clicks a checkbox, holds Shift, and then clicks another checkbox a few rows down, all the checkboxes inbetween those two checkboxes should be checked.
+    
   -->
   <div class="inbox">
     <div class="item">
@@ -97,7 +97,6 @@
   
   <script>
     const checkBoxesList = Array.from(document.querySelectorAll('.item input[type="checkbox"]'));
-    // const items = Array.from(document.querySelectorAll('.item'));
     let shiftPressed = false;
     let lastCheckedIndex;
   
@@ -105,7 +104,7 @@
       if (shiftPressed) {
         const clickIndex = checkBoxesList.findIndex(checkbox => checkbox == e.path[0]);
         const ticked = checkBoxesList.map(checkBox => checkBox.checked);
-        const [min_index, max_index] = [Math.min(clickIndex, lastCheckedIndex), Math.max(clickIndex, lastCheckedIndex];
+        const [min_index, max_index] = [Math.min(clickIndex, lastCheckedIndex), Math.max(clickIndex, lastCheckedIndex)];
         for (let index = 0; index < ticked.length; index++) {
           if (index <= max_index && index >= min_index) {
             checkBoxesList[index].checked = true;

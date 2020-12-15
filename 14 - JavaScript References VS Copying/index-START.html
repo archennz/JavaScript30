@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -13,7 +13,9 @@
     const players = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
 
     // and we want to make a copy of it.
-
+    const team = players;
+    team[3] = 'lol';
+    console.log(players, team);
     // You might think we can just do something like this:
 
     // however what happens when we update that array?
@@ -23,7 +25,7 @@
     // oh no - we have edited the original array too!
 
     // Why? It's because that is an array reference, not an array copy. They both point to the same array!
-
+    const team2 = players.slice();
     // So, how do we fix this? We take a copy instead!
 
     // one way
@@ -31,7 +33,7 @@
     // or create a new array and concat the old one in
 
     // or use the new ES6 Spread
-
+    const team3 = [...players];
     // now when we update it, the original one isn't changed
 
     // The same thing goes for objects, let's say we have a person object

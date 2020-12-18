@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -47,6 +47,41 @@
 
 <script>
 const bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'];
+
+function removeArticle(word) {
+  // if (word.slice(0,4) == 'The ') {
+  //   return word.slice(4);
+  // } else if (word.slice(0,3) == 'An ') {
+  //   return word.slice(3);
+  // } else if (word.slice(0,2) == 'A ') {
+  //   return word.slice(2);
+  // } else {
+  //   return word
+  article = new RegExp('^(a |the |an )', 'i');
+  return word.replace(article, '');
+  } 
+
+function compareAlphabet(a ,b) {
+  return a.localeCompare(b);
+}
+
+function compareWords(a,b) {
+  const aMod = removeArticle(a);
+  const bMod = removeArticle(b);
+  return compareAlphabet(aMod, bMod);
+}
+
+function renderToHTML(band) {
+  return `
+  <li>${band}</li>
+  `
+}
+const bandList = document.querySelector('#bands')
+const sortedBands = bands.sort((a,b) => compareWords(a,b));
+bandList.innerHTML = 
+  sortedBands
+    .map(band => renderToHTML(band))
+    .join(' ')
 
 
 </script>

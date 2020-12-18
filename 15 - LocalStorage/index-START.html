@@ -30,29 +30,40 @@
   const itemsList = document.querySelector('.plates');
   const items = JSON.parse(localStorage.getItem('items'))||[];
 
-  function addItem(e) {
-    e.preventDefault();
-    const text = (this.querySelector('[name=item]')).value;
+  function generateObjectFromItem(name) {
     const item = {
-      text,
+      text: name,
       done: false,
     }
-    items.push(item);
-    populateList(items, itemsList);
-    localStorage.setItem('items', JSON.stringify(items));
-    this.reset();
+    return item;
+  }
+
+  function writeItemHTML(item, index) {
+    return `
+      <li>
+        <input type="checkbox" data-index=${index} id="item${index}" ${item.done? 'checked' : ''} />  
+        <label for= "item${index}">${item.text}</label>
+      </li>
+      `;
   }
 
   function populateList(items = [], itemsList) {
-     itemsList.innerHTML = items.map((plate, i) => { 
-      return `
-      <li>
-        <input type="checkbox" data-index=${i} id="item${i}" ${plate.done? 'checked' : ''} />  
-        <label for= "item${i}">${plate.text}</label>
-      </li>
-      `;
-    }).join('')
+     itemsList.innerHTML = items.map((item, index) => writeItemHTML(item, index))
+     .join('')
+  }
 
+  function updateList(items, itemsList) {
+    populateList(items, itemsList);
+    localStorage.setItem('items', JSON.stringify(items));
+  }
+
+  function addItem(e) {
+    e.preventDefault();
+    const name = (this.querySelector('[name=item]')).value;
+    const item = generateObjectFromItem(name);
+    items.push(item);
+    this.reset();
+    updateList(items, itemsList);
   }
 
   function toggleDone(e) {
@@ -60,9 +71,9 @@
     const el = e.target;
     const index = el.dataset.index;
     items[index].done = !items[index].done; 
-    localStorage.setItem('items', JSON.stringify(items));
-    populateList(items, itemsList);
+    updateList(items, itemsList);
   }
+
 
   addItems.addEventListener('submit', addItem);
   itemsList.addEventListener('click', toggleDone)

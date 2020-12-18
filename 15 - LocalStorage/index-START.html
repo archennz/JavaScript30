@@ -23,12 +23,16 @@
       <input type="text" name="item" placeholder="Item Name" required>
       <input type="submit" value="+ Add Item">
     </form>
+
+    <input type="checkbox" id="check-all">I'm hungry, lets TACO EVERYTHING!</input> 
+    <!-- <button type   -->
   </div>
 
 <script>
   const addItems = document.querySelector('.add-items');
   const itemsList = document.querySelector('.plates');
-  const items = JSON.parse(localStorage.getItem('items'))||[];
+  let items = JSON.parse(localStorage.getItem('items'))||[];
+  const checkAllButton = document.querySelector('#check-all');
 
   function generateObjectFromItem(name) {
     const item = {
@@ -52,6 +56,25 @@
      .join('')
   }
 
+  function toggleItem(item) {
+    item.done = !item.done;
+    return item;
+  }
+
+  function toggleItem(item){
+    item.done = !item.done; 
+    return item;
+  }
+
+  function tacoAllItems(items, bool) {
+    items.map(item => {
+      item.done = bool;
+      return item;
+    });
+  }
+
+
+
   function updateList(items, itemsList) {
     populateList(items, itemsList);
     localStorage.setItem('items', JSON.stringify(items));
@@ -70,14 +93,24 @@
     if (!e.target.matches('input')) return;
     const el = e.target;
     const index = el.dataset.index;
-    items[index].done = !items[index].done; 
+    toggleItem(items[index]);
+    updateList(items, itemsList);
+  }
+
+  function tacoAll() {
+    tacoAllItems(items, this.checked);
     updateList(items, itemsList);
   }
 
 
+  populateList(items, itemsList);
+
   addItems.addEventListener('submit', addItem);
   itemsList.addEventListener('click', toggleDone)
-  populateList(items, itemsList);
+  checkAllButton.addEventListener('click', tacoAll);
+  
+
+
 
 
 </script>

@@ -189,10 +189,16 @@ function timeToSecond(mins, secs) {
 }
 
 function processToSeconds(string) { 
-  const [min, secs] = string.split(":");
+  const [mins, secs] = string.split(":");
   return timeToSecond(mins, secs);
 }
-const seconds = timeNodes.map(node => processToSeconds(node));
+
+function addSeconds(accum, currentValue) {
+  return accum + processToSeconds(currentValue.dataset.time);
+}
+// const seconds = timeNodes.map(node => processToSeconds(node.dataset.time));
+
+console.log(timeNodes.reduce(addSeconds, 0));
 </script>
 </body>
 </html>

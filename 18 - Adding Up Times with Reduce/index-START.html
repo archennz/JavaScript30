@@ -182,6 +182,17 @@
     </li>
   </ul>
 <script>
+const timeNodes = Array.from(document.querySelectorAll('[data-time]'));
+
+function timeToSecond(mins, secs) {
+  return (parseFloat(mins) * 60 + parseFloat(secs));
+}
+
+function processToSeconds(string) { 
+  const [min, secs] = string.split(":");
+  return timeToSecond(mins, secs);
+}
+const seconds = timeNodes.map(node => processToSeconds(node));
 </script>
 </body>
 </html>

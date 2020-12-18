@@ -26,13 +26,16 @@
 
     <input type="checkbox" id="check-all">I'm hungry, lets TACO EVERYTHING!</input> 
     <!-- <button type   -->
+    <input type="checkbox" id="check-all">I'm hungry, lets TACO EVERYTHING!</input> <br>
+    <button id="clear-all">CLEAR EVERYTHING!</button>  
   </div>
 
 <script>
   const addItems = document.querySelector('.add-items');
   const itemsList = document.querySelector('.plates');
   let items = JSON.parse(localStorage.getItem('items'))||[];
-  const checkAllButton = document.querySelector('#check-all');
+  const checkAllBox = document.querySelector('#check-all');
+  const clearAllButton = document.querySelector('#clear-all');
 
   function generateObjectFromItem(name) {
     const item = {
@@ -81,6 +84,7 @@
   }
 
   function addItem(e) {
+  function  addItem(e) {
     e.preventDefault();
     const name = (this.querySelector('[name=item]')).value;
     const item = generateObjectFromItem(name);
@@ -101,6 +105,11 @@
     tacoAllItems(items, this.checked);
     updateList(items, itemsList);
   }
+  
+  function clearItems() {
+    items = [];
+    updateList(items, itemsList);
+  }
 
 
   populateList(items, itemsList);
@@ -108,6 +117,7 @@
   addItems.addEventListener('submit', addItem);
   itemsList.addEventListener('click', toggleDone)
   checkAllButton.addEventListener('click', tacoAll);
+  clearAllButton.addEventListener('click', clearItems);
   
 
 

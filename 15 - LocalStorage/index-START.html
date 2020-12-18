@@ -24,8 +24,6 @@
       <input type="submit" value="+ Add Item">
     </form>
 
-    <input type="checkbox" id="check-all">I'm hungry, lets TACO EVERYTHING!</input> 
-    <!-- <button type   -->
     <input type="checkbox" id="check-all">I'm hungry, lets TACO EVERYTHING!</input> <br>
     <button id="clear-all">CLEAR EVERYTHING!</button>  
   </div>
@@ -76,14 +74,11 @@
     });
   }
 
-
-
   function updateList(items, itemsList) {
     populateList(items, itemsList);
     localStorage.setItem('items', JSON.stringify(items));
   }
 
-  function addItem(e) {
   function  addItem(e) {
     e.preventDefault();
     const name = (this.querySelector('[name=item]')).value;
@@ -116,7 +111,7 @@
 
   addItems.addEventListener('submit', addItem);
   itemsList.addEventListener('click', toggleDone)
-  checkAllButton.addEventListener('click', tacoAll);
+  checkAllBox.addEventListener('click', tacoAll);
   clearAllButton.addEventListener('click', clearItems);
   
 
